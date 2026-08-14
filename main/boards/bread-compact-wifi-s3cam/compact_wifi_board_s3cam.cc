@@ -6,8 +6,8 @@
 #include "button.h"
 #include "config.h"
 #include "mcp_server.h"
-#include "lamp_controller.h"
-#include "led/single_led.h"
+#include "led/circular_strip.h"
+#include "led_strip_control.h"
 #include "esp32_camera.h"
 
 #include <esp_log.h>
@@ -66,6 +66,7 @@ private:
     Button boot_button_;
     LcdDisplay* display_;
     Esp32Camera* camera_;
+    CircularStrip* led_strip_;
 
     void InitializeSpi() {
         spi_bus_config_t buscfg = {};
@@ -171,15 +172,18 @@ public:
         InitializeLcdDisplay();
         InitializeButtons();
         InitializeCamera();
+
+        // Initialize WS2812 LED strip
+        led_strip_ = new CircularStrip(WS2812_GPIO, WS2812_LED_COUNT);
+        new LedStripControl(led_strip_);
+
         if (DISPLAY_BACKLIGHT_PIN != GPIO_NUM_NC) {
             GetBacklight()->RestoreBrightness();
         }
-        
     }
 
     virtual Led* GetLed() override {
-        static SingleLed led(BUILTIN_LED_GPIO);
-        return &led;
+        return led_strip_;
     }
 
     virtual AudioCodec* GetAudioCodec() override {
