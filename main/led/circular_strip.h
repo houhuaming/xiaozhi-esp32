@@ -32,6 +32,10 @@ public:
     void Breathe(StripColor low, StripColor high, int interval_ms);
     void Scroll(StripColor low, StripColor high, int length, int interval_ms);
 
+    // 自定义歌曲灯光特效
+    void StopEffect();
+    void PlayCustomVideoEffect(int duration_ms);
+
 private:
     std::mutex mutex_;
     TaskHandle_t blink_task_ = nullptr;

@@ -67,6 +67,7 @@ private:
     LcdDisplay* display_;
     Esp32Camera* camera_;
     CircularStrip* led_strip_;
+    NoLed no_led_;  // 用于返回给系统的空LED
 
     void InitializeSpi() {
         spi_bus_config_t buscfg = {};
@@ -183,7 +184,7 @@ public:
     }
 
     virtual Led* GetLed() override {
-        return led_strip_;
+        return &no_led_;  // 返回空LED，灯带独立控制
     }
 
     virtual AudioCodec* GetAudioCodec() override {
