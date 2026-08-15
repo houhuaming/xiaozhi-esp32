@@ -303,7 +303,7 @@
 
 
 // WS2812 LED Strip
-#define WS2812_GPIO       GPIO_NUM_14
+#define WS2812_GPIO       GPIO_NUM_12
 #define WS2812_LED_COUNT   288
 
 #endif // _BOARD_CONFIG_H_
