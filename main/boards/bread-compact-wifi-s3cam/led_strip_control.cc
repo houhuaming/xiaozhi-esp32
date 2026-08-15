@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "mcp_server.h"
 #include <esp_log.h>
+#include <esp_random.h>
 #include <cstring>
 #include <cstdlib>
 #include <algorithm>
