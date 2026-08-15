@@ -1,4 +1,5 @@
 #include "led_strip_control.h"
+#include "config.h"
 #include "settings.h"
 #include "mcp_server.h"
 #include <esp_log.h>
@@ -244,7 +245,7 @@ static void EffectTaskFunc(void* arg) {
 
 LedStripControl::LedStripControl(CircularStrip* led_strip)
     : led_strip_(led_strip) {
-    max_leds_ = 8;  // 默认8颗LED
+    max_leds_ = WS2812_LED_COUNT;  // 从配置读取LED数量
 
     Settings settings("led_strip");
     brightness_level_ = settings.GetInt("brightness", 4);
